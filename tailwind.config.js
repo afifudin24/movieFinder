@@ -13,11 +13,13 @@ module.exports = {
         secondary: '#F33F3F',  // Contoh kode warna biru lebih terang
         accent: '#F97316',     // Contoh kode warna oranye
         customGray: '#F5F5F5', // Contoh kode warna abu-abu kustom
-        bgSidebar : '#1F1F1F',
-        bgMain : '#FFFFFF',
+        bgSidebar : '#000000',
+        bgActive: "#1F1F1F",
+        bgMain : 'rgba(255, 255, 255, 0.1)'
       },
       fontFamily : {
-        archivo : ['Archivo', 'sans-serif'],
+        archivo: ['Archivo', 'sans-serif'],
+         lato: ['Lato', 'sans-serif'],
       }
     },
   },
