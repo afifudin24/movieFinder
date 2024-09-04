@@ -11,6 +11,7 @@ module.exports = {
         primary: '#1D4ED8',    // Contoh kode warna biru gelap
         text : '#E1E1E1',
         secondary: '#F33F3F',  // Contoh kode warna biru lebih terang
+        secondaryHover : '#FF3FF3',
         accent: '#F97316',     // Contoh kode warna oranye
         customGray: '#F5F5F5', // Contoh kode warna abu-abu kustom
         bgSidebar : '#000000',

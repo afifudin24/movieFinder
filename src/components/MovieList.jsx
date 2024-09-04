@@ -1,29 +1,62 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import image from '../../public/image.jpeg'
+import MovieCard from "./MovieCard";
+import ModalAddWatchlist from "./ModalAddWatchlist";
 const MovieList = () => {
+    const [buka, setBuka] = useState(false);
+    const handleOpen = () => setBuka(true);
+    const [selectedMovie, setSelectedMovie] = useState({});
+    useState(() => {
+        console.log(selectedMovie);
+    })
     const [movie, setMovie] = useState([
         {
-            judul : "iniJudul"
+            id: 1,
+            judul: "iniJudul"
         },
         {
-            judul : "iniJudul"
+            id: 2,
+            judul: "iniJudul"
         },
         {
-            judul : "iniJudul"
+            id: 3,
+            judul: "iniJudul"
         },
         {
-            judul : "iniJudul"
+            id: 4,
+            judul: "iniJudul"
         },
         {
-            judul : "iniJudul"
+            id: 5,
+            judul: "iniJudul"
         },
         {
-            judul : "iniJudul"
+            id: 6,
+            judul: "iniJudul"
         },
         {
-            judul : "iniJudul"
+            id: 7,
+            judul: "iniJudul"
         },
-    ]) 
+    ]);
+    const [favoriteMovie, setFavoriteMovie] = useState([
+        {
+            id: 1,
+            judul_id: 2
+        }
+    ]);
+
+         const [enhancedMovieList, setEnhancedMovieList] = useState([]);
+
+    // Perbarui enhancedMovieList setiap kali favoriteMovie atau movie berubah
+    useEffect(() => {
+        console.log(favoriteMovie);
+        const updateEnhancedMovieList = movie.map(m => {
+            const isFavorite = favoriteMovie.some(fav => fav.judul_id === m.id);
+            return { ...m, fav: isFavorite };
+        });
+        setEnhancedMovieList(updateEnhancedMovieList);
+    }, [favoriteMovie, movie]);
     return (
         <div className="mt-5">
             <div className="cari w-full font-lato">
@@ -31,29 +64,23 @@ const MovieList = () => {
             </div>
             <div className="my-5 text-text"><h3 className="text-xl">Popular Movies Right Now</h3></div>
                 {
-                    movie.length > 0 ? (
-                    <div className="grid text-text font-lato my-2 grid-cols-3 w-full gap-7 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7"> {
-                        movie.map((item , index) => (
+                    enhancedMovieList.length > 0 ? (
+                    <div className="grid text-text font-lato my-2 grid-cols-2 sm:grid-cols-3 w-full gap-7 md:grid-cols-4  lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6"> {
+                        enhancedMovieList.map((item , index) => (
                             (
-                                <div key={index} className="h-64 bg-zinc-800 rounded-sm">
-                                    <div className="heroImage h-40 w-full bg-slate-400" >
-                                        <img src={image} className="h-full object-cover w-full" />
-                                    </div>
-                                    <div className="p-2">
-                                        <p className="text-right  text-xs font-light">8.0</p>
-                                        <p className="text-sm">{item.judul}</p>
-                                        <p className="text-sm font-light">(2024)</p>
-                                    </div>
-                                </div>
+                               <MovieCard setFavoriteMovie={setFavoriteMovie} fav={item.fav} item={item} selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} handleOpen={handleOpen} movie={movie} key={index} judul={item.judul} img={image} index={index}  />
                             )
                         ))
                     }
             </div>
                     ): (
                             <div>Tidak Ada Data</div>
+                            
                     )
                     
             }
+
+            <ModalAddWatchlist buka={buka} movie={selectedMovie} setBuka={setBuka} />
 
         </div>
     )
