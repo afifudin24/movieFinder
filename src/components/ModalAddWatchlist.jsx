@@ -45,7 +45,8 @@ const ModalAddWatchlist = ({buka, setBuka, movie}) => {
             setIsWatchlist(true)   
             console.log("OK");
               setMovieWatchlist(prev => {
-            const updateMovieWatchlist = [...prev, data];
+                const updateMovieWatchlist = [...prev, data];
+                console.log("ini data", updateMovieWatchlist)
             localStorage.setItem('movieWatchlist', JSON.stringify(updateMovieWatchlist));
             return updateMovieWatchlist;
               });
@@ -60,11 +61,11 @@ const ModalAddWatchlist = ({buka, setBuka, movie}) => {
 
     // Styling untuk modal
     const style = {
-        position: 'absolute',
+       position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: { xs: '90%', sm: '70%', md: '50%' },
         bgcolor: 'background.paper',
         border: '1px solid #000',
         boxShadow: 24,
@@ -73,15 +74,16 @@ const ModalAddWatchlist = ({buka, setBuka, movie}) => {
         fontSize: '1rem',
     };
     return (
-          <Modal
+      <Modal
+       
                 open={buka}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Box  sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                     Add  {movie.judul} To Watchlist
+                     Add  {movie.title} To Watchlist
                     </Typography>
                      <FormControl sx={{ my:2, minWidth: 220 }} size="small">
       <InputLabel id="demo-select-small-label">WatchList</InputLabel>

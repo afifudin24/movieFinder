@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Modal, Box, Typography, Button, TextField } from '@mui/material';
 
+// eslint-disable-next-line react/prop-types
 const ModalLayout = ({ watchList, setWatchList }) => {
     // State untuk mengontrol pembukaan dan penutupan modal
     const [open, setOpen] = useState(false);
@@ -45,7 +47,7 @@ const ModalLayout = ({ watchList, setWatchList }) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: { xs: '90%', sm: '70%', md: '50%' },
         bgcolor: 'background.paper',
         border: '1px solid #000',
         boxShadow: 24,

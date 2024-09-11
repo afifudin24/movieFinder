@@ -19,11 +19,12 @@ const Sidebar = () => {
     } else {
       console.log('No watchList found in localStorage'); // Ini akan menampilkan pesan jika tidak ada data di localStorage
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
     
     return (
         <div className="w-full h-screen">
-            <h2 className="text-sm sm:text-md lg:text-2xl xl:text-4xl md:text-xl shadow-sm font-archivo font-bold my-3 text-start text-secondary w-full md:11/12 lg:w-11/12 xl:w-10/12 mx-auto">MovieFinder</h2>
+            <h2 className="text-xl sm:text-md lg:text-2xl xl:text-4xl md:text-xl shadow-sm font-archivo font-bold my-3 text-start text-secondary w-full md:11/12 lg:w-11/12 xl:w-10/12 mx-auto">MovieFinder</h2>
             <div className="sideMenu text-text font-lato text-sm   lg:text-base xl:text-lg md:text-base shadow-sm font-light text-start w-full md:11/12 lg:w-11/12 xl:w-10/12 mx-auto my-4  ">
                 <Link
                     to="/"

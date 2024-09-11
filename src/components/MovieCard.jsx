@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
  
 import { Link } from "react-router-dom";
-import { Rating } from "@mui/material";
-const MovieCard = ({ setFavoriteMovie ,fav, item, movie, index, img, judul, handleOpen, selectedMovie,  setSelectedMovie }) => {
+import { useEffect } from "react";
+// eslint-disable-next-line no-unused-vars
+const MovieCard = ({ setFavoriteMovie, favoriteMovie ,fav, item, movie, index, img, judul, handleOpen, selectedMovie,  setSelectedMovie }) => {
+    const date = item.release_date;
     const select = (data) => {
         handleOpen();
         setSelectedMovie(data);
@@ -10,23 +12,37 @@ const MovieCard = ({ setFavoriteMovie ,fav, item, movie, index, img, judul, hand
         console.log(selectedMovie)
     }
 
-    const addFavorite = () => {
-        const fav = {
-            id: Date.now(),
-            judul_id: item.id
-        };
-        setFavoriteMovie(prev => {
-            const updateFavMovie = [...prev, fav];
-            localStorage.setItem('favMovie', JSON.stringify(updateFavMovie));
-            console.log(updateFavMovie);
-            return updateFavMovie;
-        })
+   const addFavorite = () => {
+    setFavoriteMovie(prev => {
+        // Cek apakah judul_id sudah ada di favoriteMovie
+        const isAlreadyFavorite = prev.some(fav => fav.judul_id === item.id);
+        
+        let updateFavMovie;
+        
+        if (isAlreadyFavorite) {
+            // Jika sudah ada, hapus dari favoriteMovie
+            updateFavMovie = prev.filter(fav => fav.judul_id !== item.id);
+        } else {
+            // Jika belum ada, tambahkan ke favoriteMovie
+            const fav = {
+                id: Date.now(),
+                judul_id: item.id
+            };
+            updateFavMovie = [...prev, fav];
+        }
 
-    }
+        // Simpan updateFavMovie ke localStorage
+        localStorage.setItem('favMovie', JSON.stringify(updateFavMovie));
+        console.log(updateFavMovie);
+        return updateFavMovie;
+    });
+     
+}
+     
     return (
-         <div
+         <div 
           
-            className="min-h-72 lg:min-h-96 relative bg-zinc-800   duration-100 transition-all rounded-sm"
+            className="min-h-80  lg:min-h-96 relative bg-zinc-800   duration-100 transition-all rounded-sm"
         >
             <div className="absolute top-0 left-0">
                 <span onClick={() => select(item)} className="inline-block p-1 cursor-pointer hover:bg-slate-600 opacity-70 bg-black outline-1 outline outline-white rounded-sm">
@@ -34,7 +50,7 @@ const MovieCard = ({ setFavoriteMovie ,fav, item, movie, index, img, judul, hand
                 </span>
             </div>
             <div className="cursor-pointer heroImage lg:h-56 h-40 w-full bg-slate-400">
-                <img src={img} className="h-full object-cover w-full" alt={judul} />
+                <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} className="h-full object-cover w-full" alt={judul} />
             </div>
             <div className="p-2">
                 <div className="flex mb-1 justify-between  items-center ">
@@ -42,28 +58,19 @@ const MovieCard = ({ setFavoriteMovie ,fav, item, movie, index, img, judul, hand
                     <i onClick={addFavorite} className={`fa text-lg fa-heart ${fav ? 'text-red-600' : 'text-gray-400'} hover:text-red-600 duration-100 transition-all`}></i>
                     </div>
                     <div className="text-xs font-light">
-                        <Rating 
-                            name="simple-controlled"
-                            size="small"
-                            value={"3"}
-                            readOnly
-                            sx={
-                                {
-                                    fontSize: '1rem',
-                                      '& .MuiRating-iconEmpty': {
-                                     display: 'none', // Sembunyikan bintang kosong
-          },
-                                }
-                            }
-                        />
+                       <i className="text-yellow-400 fas fa-star mx-1"></i>
+                        {item.vote_average}
                 </div>
                 </div>
-                <p className="text-sm">{judul}</p>
-                <p className="text-xs font-light">(2024)</p>
+                <p className="text-sm my-1">{item.title}</p>
+                <p className="text-xs font-light">
+  {date}
+</p>
+
                 <Link
                     className="transition-all"
-            to={`/movie/${index}`}
-            state={{ img, judul, movie }}>
+            to={`/movie/${item.id}`}
+            state={{ img, judul, item }}>
                 <button className="hover:shadow-slate-500 hover:shadow-md outline-none duration-100  text-xs my-2 p-2 font-lato rounded-sm bg-secondary">Detail</button>
                 </Link>
             </div>
