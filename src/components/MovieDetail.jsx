@@ -7,31 +7,39 @@ import { getGenre } from '../function/Method';
 const MovieDetail = () => {
     const location = useLocation();
     const { img, judul, item } = location.state || {}; // Mengambil data dari state
-    console.log(item);
+ 
     const genreIds = item.genre_ids;
     const [genres, setGenres] = useState([]);
     const [genreMap, setGenreMap] = useState(new Map());
      const [filteredGenreNames, setFilteredGenreNames] = useState([]);
-    useEffect(() => {
-        const getGenrez = async () => {
-            try {
-                const response = await getGenre();
-                setGenres(response.genres);
+  useEffect(() => {
+    if (item.genres) {
+      const result = item.genres.map(genre => genre.name).join(', ');
+      console.log(result);
+      setFilteredGenreNames(result);
+      console.log("kocak");
+    } else {
+      
+      const getGenrez = async () => {
+        try {
+          const response = await getGenre();
+          setGenres(response.genres);
                 console.log(response.genres);
                   const map = new Map(response.genres.map(genre => [genre.id, genre.name]));
                 setGenreMap(map);
                  const names = genreIds
           .map(id => map.get(id))
-                    .filter(name => name !== undefined);
-                const genreString = names.join(', ');
-        setFilteredGenreNames(genreString);
-
-            } catch (err) {
-                console.log(err)
-            }
-        };
-        getGenrez();
-        console.log("ini", genres);
+          .filter(name => name !== undefined);
+          const genreString = names.join(', ');
+          setFilteredGenreNames(genreString);
+          
+        } catch (err) {
+          console.log(err)
+        }
+      };
+      getGenrez();
+    }
+      // console.log("ini", genres);
     }, [])
     return (
       <div className='w-11/12 mx-auto mt-5'>

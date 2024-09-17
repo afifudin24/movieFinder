@@ -9,6 +9,7 @@ import Home from './components/Page/Home';
 import Favorite from './components/Page/Favorite';
 import MovieDetail from './components/MovieDetail';
 import MovieWatchList from './components/Page/MovieWatchList';
+import ManageWatchlist from './components/Page/ManageWatchlist';
 
 import { getPopularFilm } from './function/Method';
 import { BrowserRouter } from 'react-router-dom';
@@ -18,7 +19,6 @@ function App() {
   const handleSide = () => {
     setIsSide(!isSide);
   }
-
   
   useEffect(() => {
   
@@ -51,6 +51,7 @@ function App() {
               <Route path='/favorites' element={<Favorite />} />
               <Route path="/movie/:id" element={<MovieDetail />} /> {/* Rute untuk detail film */}
               <Route path="/moviewatchlist/:id" element={<MovieWatchList />} /> {/* Rute untuk detail film */}
+             
               
           </Routes>
           

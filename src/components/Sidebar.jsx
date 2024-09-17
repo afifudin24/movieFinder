@@ -23,7 +23,7 @@ const Sidebar = () => {
   }, []);
     
     return (
-        <div className="w-full h-screen">
+        <div className="w-full">
             <h2 className="text-xl sm:text-md lg:text-2xl xl:text-4xl md:text-xl shadow-sm font-archivo font-bold my-3 text-start text-secondary w-full md:11/12 lg:w-11/12 xl:w-10/12 mx-auto">MovieFinder</h2>
             <div className="sideMenu text-text font-lato text-sm   lg:text-base xl:text-lg md:text-base shadow-sm font-light text-start w-full md:11/12 lg:w-11/12 xl:w-10/12 mx-auto my-4  ">
                 <Link
@@ -38,6 +38,7 @@ const Sidebar = () => {
                 >
                     <i className="fa fa-heart"></i> <span>Favorite</span>
                 </Link>
+              
 
                 <ModalLayout watchList={watchList} setWatchList={setWatchList} />
 

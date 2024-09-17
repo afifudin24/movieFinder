@@ -41,3 +41,14 @@ export const getMovie = async (id) => {
         console.log(err);
     }
 } 
+
+export const getMovieByGenre = async (genreId, page) => {
+    try {
+        const response = await axios.get(`${baseUrl}3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${page}`);
+        const data = response.data;
+        console.log(data);
+        return data;
+    } catch (err) {
+        console.log(err);
+    }
+}

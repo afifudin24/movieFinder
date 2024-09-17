@@ -15,25 +15,28 @@ const MovieCard = ({ setFavoriteMovie, favoriteMovie ,fav, item, movie, index, i
    const addFavorite = () => {
     setFavoriteMovie(prev => {
         // Cek apakah judul_id sudah ada di favoriteMovie
-        const isAlreadyFavorite = prev.some(fav => fav.judul_id === item.id);
+        console.log(prev);
+        const isAlreadyFavorite = prev.some(fav => fav.movie_id === item.id);
         
         let updateFavMovie;
+        console.log(isAlreadyFavorite);
         
         if (isAlreadyFavorite) {
             // Jika sudah ada, hapus dari favoriteMovie
-            updateFavMovie = prev.filter(fav => fav.judul_id !== item.id);
+            updateFavMovie = prev.filter(fav => fav.movie_id !== item.id);
+            
         } else {
             // Jika belum ada, tambahkan ke favoriteMovie
             const fav = {
                 id: Date.now(),
-                judul_id: item.id
+                movie_id: item.id
             };
             updateFavMovie = [...prev, fav];
         }
 
         // Simpan updateFavMovie ke localStorage
         localStorage.setItem('favMovie', JSON.stringify(updateFavMovie));
-        console.log(updateFavMovie);
+        console.log('KOK', updateFavMovie);
         return updateFavMovie;
     });
      
@@ -54,9 +57,11 @@ const MovieCard = ({ setFavoriteMovie, favoriteMovie ,fav, item, movie, index, i
             </div>
             <div className="p-2">
                 <div className="flex mb-1 justify-between  items-center ">
+                    {fav == "kosong" ? '' : (
                     <div className="cursor-pointer">
                     <i onClick={addFavorite} className={`fa text-lg fa-heart ${fav ? 'text-red-600' : 'text-gray-400'} hover:text-red-600 duration-100 transition-all`}></i>
                     </div>
+                    )}
                     <div className="text-xs font-light">
                        <i className="text-yellow-400 fas fa-star mx-1"></i>
                         {item.vote_average}

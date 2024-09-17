@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import MovieCard from "../MovieCard";
 import { getMovie } from "../../function/Method"; // Pastikan getMovie adalah fungsi yang Anda buat untuk mengambil data film
+import { Fade } from "react-reveal";
+
 const MovieWatchList = () => {
     const location = useLocation();
     const { item } = location.state || {};
     const [watchList, setWatchList] = useState([]);
     const [movies, setMovies] = useState([]);
+    const [favoriteMovie, setFavoriteMovie] = useState([]);
+      const [buka, setBuka] = useState(false);
+     const handleOpen = () => setBuka(true);
+
+ const [selectedMovie, setSelectedMovie] = useState({});
     const idWatchlist = item?.id;
 
     useEffect(() => {
@@ -38,16 +46,28 @@ const MovieWatchList = () => {
     }, [idWatchlist]); // Tambahkan idWatchlist sebagai dependensi useEffect
 
     return (
-        <div className="text-white">
-            <h1>Watchlist: {item?.watchlist}</h1>
-            <div>
+        <div className="text-white py-3  w-11/12 mx-auto">
+            <h1 className="text-2xl font-lato my-2 mb-5">Watchlist: {item?.watchlist}</h1>
+             <div className="grid text-text font-lato my-2 grid-cols-2 sm:grid-cols-3 w-full gap-12 md:gap-7 md:grid-cols-4  lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6">
                 {movies.length > 0 ? (
-                    movies.map(movie => (
-                        <div key={movie.id}>
-                            <h2>{movie.title}</h2>
-                            <p>{movie.overview}</p>
-                            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
-                        </div>
+                    movies.map((item, index) => (
+                          <div key={index}>
+                                    <Fade delay={(index + 1) * 100} bottom>
+                                <MovieCard 
+
+                                            favoriteMovie={favoriteMovie} 
+                                            setFavoriteMovie={setFavoriteMovie} 
+                                            fav={'kosong'} 
+                                            item={item} 
+                                            selectedMovie={selectedMovie} 
+                                            setSelectedMovie={setSelectedMovie} 
+                                            handleOpen={handleOpen} 
+                                            movie={''} 
+                                            judul={item.original_title}  
+                                            index={index} 
+                                        />
+                                    </Fade>
+                                </div>
                     ))
                 ) : (
                     <p>No movies found</p>
