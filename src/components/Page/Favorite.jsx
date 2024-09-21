@@ -13,7 +13,7 @@ const Favorite = () => {
   const [favoriteMovie, setFavoriteMovie] = useState([]);
   useEffect(() => {
     const favMovies = JSON.parse(localStorage.getItem('favMovie'));
-    if (favMovies.length > 0) {
+    if (favMovies) {
       console.log('Ada data', favMovies);
       setFavoriteMovie(favMovies);
       const fetchMovies = async () => {
